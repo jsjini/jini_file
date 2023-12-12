@@ -379,9 +379,9 @@ select employee_id, last_name
 from   employees
 where  department_id in (select department_id
                         from    employees
-                        where   last_name like ('%u%'));
+                        where   lower(last_name) like ('%u%'));
 --4. 부서 위치 ID(location_id)가 1700인 모든 사원의 이름, 부서 번호 및 업무 ID를 표시하시오.
-select last_name, department_id, employee_id
+select last_name, department_id, job_id
 from   employees
 where  department_id in (select department_id
                         from    departments
@@ -390,23 +390,22 @@ where  department_id in (select department_id
 select last_name, salary
 from   employees
 where  manager_id = (select employee_id
-                    from    employees
-                    where   last_name = 'King');
+                     from    employees
+                     where   lower(last_name) = 'king');
 --6. Executive 부서의 모든 사원에 대한 부서 번호, 이름 및 업무 ID를 표시하시오.
 select department_id, last_name, job_id
 from   employees
-where  department_id = (select department_id
+where  department_id in (select department_id
                        from    departments
-                       where   department_name = 'Executive');
+                       where   lower(department_name) = 'executive');
 --7. 평균 급여보다 많은 급여를 받고 이름에 u가 포함된 사원과 같은 부서에서 근무하는 모든 사원의 사원 번호, 이름 및 급여를 표시하시오.
 select employee_id, last_name, salary
-from employees
-where salary > (select avg(salary)
-from employees
-where last_name like ('%u%')
-and (select 
-from employees
-where last_name like ('%u%')
+from   employees
+where  department_id in (select department_id
+                        from    employees
+                        where   lower(last_name) like ('%u%'))
+and    salary > (select avg(salary)
+                from    employees);
 
 --3. 다음 예제 데이터를 MY_EMPLOYEE 테이블에 추가하시오.
 --ID	LAST_NAME 	FIRST_NAME 	USERID 	SALARY
