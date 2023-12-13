@@ -549,3 +549,375 @@ purge recyclebin;
 rename dept to dept80;
 -- 테이블 절삭
 truncate table dept80;
+
+create table emp_test (
+    empid number(5),
+    empname varchar2(10) not null,
+    duty varchar2(9),
+    sal number(7,2),
+    bonus number(7,2),
+    mgr number(5),
+    hire_date date,
+    deptid number(2));
+
+insert into emp_test(empid, empname)
+values (10, null);
+insert into emp_test(empid, empname)
+values (10, 'YD');
+
+create table dept_test (
+    deptid number(2),
+    dname  varchar2(14),
+    loc    varchar2(13),
+    unique(dname));
+
+insert into dept_test(deptid, dname)
+values (10,null);
+insert into dept_test(deptid, dname)
+values (20,'YD');
+insert into dept_test(deptid, dname)
+values (20,'YD');
+
+drop table dept_test;
+
+create table dept_test (
+    deptid number(2) primary key,
+    dname  varchar2(14),
+    loc    varchar2(13),
+    unique(dname));
+
+insert into dept_test
+values (10, 'YD', 'Deagu');
+insert into dept_test
+values (20, 'YD1', 'Deagu');
+insert into dept_test
+values (20, 'YD2', 'Deagu');
+insert into dept_test
+values (null, 'YD3', 'Deagu');
+insert into dept_test
+values (30, 'YD1', 'Deagu');
+
+drop table emp_test;
+
+create table emp_test (
+    empid number(5),
+    empname varchar2(10) not null,
+    duty varchar2(9),
+    sal number(7,2),
+    bonus number(7,2),
+    mgr number(5),
+    hire_date date,
+    deptid number(2),
+    foreign key (deptid) references dept_test(deptid));
+-- table 레벨에서 지정시 foreign key (칼럼명) references 부모테이블(칼럼명)
+-- colum 레벨에서 지정시 deptid number(2) references dept_test(deptid)
+insert into emp_test(empid, empname, deptid)
+values (100, 'YD1', 10);
+insert into emp_test(empid, empname, deptid)
+values (200, 'YD2', null);
+insert into emp_test(empid, empname, deptid)
+values (300, 'YD3', 30);
+
+drop table emp_test;
+
+create table emp_test (
+    empid number(5),
+    empname varchar2(10) not null,
+    duty varchar2(9),
+    sal number(7,2),
+    bonus number(7,2),
+    mgr number(5),
+    hire_date date,
+    deptid number(2),
+    foreign key (deptid) references dept_test(deptid) on delete set null);
+    
+insert into emp_test(empid, empname, deptid)
+values (100, 'YD1', 10);
+insert into emp_test(empid, empname, deptid)
+values (200, 'YD2', null);
+
+select *
+from emp_test;
+
+delete dept_test
+where deptid = 10;
+
+select *
+from dept_test;
+
+drop table emp_test;
+
+create table emp_test (
+    empid     number(5),
+    empname   varchar2(10) not null,
+    duty      varchar2(9),
+    sal       number(7,2),
+    bonus     number(7,2),
+    mgr       number(5),
+    hire_date date,
+    deptid    number(2)check (deptid between 10 and 99),
+    foreign key (deptid) references dept_test(deptid));
+    
+alter table emp_test
+add   primary key(empid);
+
+alter table emp_test
+add   foreign key(mgr) references emp_test(empid);
+-- not null 제약조건은 modify로 추가 가능
+alter table emp_test
+modify (duty not null);
+select duty
+from emp_test;
+update emp_test
+set duty = '1';
+
+--제약조건 보기
+select constraint_name, column_name
+from   user_cons_columns;
+
+desc user_cons_columns;
+
+select constraint_name, table_name, column_name
+from   user_cons_columns
+where  table_name = 'EMP_TEST';
+
+alter table emp_test
+drop constraint SYS_C007022;
+
+-- view(뷰)
+create view empvu80
+  as select employee_id, last_name, salary
+     from   employees
+     where  department_id = 80;
+
+select *
+from empvu80;
+
+--뷰는 수정이 없고 or replace로 덮어쓰는것만 가능.
+-- 수식이 들어가면 이유불문 컬럼알리아스를 써야함.
+create view salvu50
+  as select employee_id id_number, last_name name, -- salvu50(id_number,name,ann_salary)
+            salary*12 ann_salary
+     from   employees
+     where  department_id = 50;
+
+select *
+from   salvu50;
+
+create or replace view empvu80
+   (id_number, name, sal, department_id)
+as select employee_id, first_name || ' ' 
+          || last_name, salary, department_id
+   from   employees
+   where  department_id = 80;
+
+select *
+from   empvu80;
+
+create or replace view dept_sum_vu
+   (name, minsal, maxsal, avgsal)
+as select   d.department_name, min(e.salary),
+            max(e.salary), avg(e.salary)
+   from     employees e join departments d
+   on       (e.department_id = d.department_id)
+   group by d.department_name;
+   
+select *
+from   dept_sum_vu;
+
+select rownum, employee_id
+from employees;
+
+commit;
+
+select *
+from empvu80;
+
+delete empvu80
+where id_number = 176;
+
+select *
+from employees;
+
+select *
+from dept_sum_vu;
+
+delete dept_sum_vu
+where name = 'IT';
+
+create view test_vu
+as select department_name
+   from   departments;
+
+select *
+from test_vu;
+
+insert into test_vu
+values ('YD');
+
+create sequence dept_deptid_seq
+    increment by 10
+    start with 120
+    maxvalue 9999
+    nocache
+    nocycle;
+    
+insert into departments(department_id,
+            department_name, location_id)
+values      (dept_deptid_seq.nextval,
+            'Support', 2500);
+select *
+from departments;
+
+rollback;
+
+select *
+from departments;
+
+select dept_deptid_seq.currval
+from dual;
+
+create synonym d_sum
+for dept_sum_vu;
+
+select *
+from d_sum;
+select *
+from dept_sum_vu;
+
+select *
+from system_privilege_map;
+
+select level, employee_id, last_name, manager_id
+from employees
+start with manager_id is null
+connect by prior employee_id = manager_id; -- == connect by manager_id = prior employee_id;
+
+select level, employee_id, last_name, manager_id
+from employees
+start with manager_id is null
+connect by prior manager_id = employee_id;
+
+select level,
+       lpad(' ', 4*(level-1))||employee_id employee,
+       last_name, manager_id
+from employees
+start with manager_id is null
+connect by prior employee_id = manager_id;
+
+
+
+
+
+
+-- 1번
+select employee_id, last_name, salary, department_id
+from   employees
+where  upper(last_name) like ('H%')
+       and salary between 7000 and 12000;
+
+-- 2번
+select employee_id, last_name, to_char(hire_date, 'dd/mm/yyyy day'), to_char(salary*commission_pct,'$99,999.00') as incen
+from employees
+where commission_pct is not null
+order by incen desc;
+
+-- 3번
+select employee_id, last_name, job_id, salary, department_id
+from   employees
+where  salary > 5000 
+       and department_id in (50, 60);
+
+-- 4번
+select employee_id, last_name, department_id, case department_id when 20 then 'Canada'
+                                                     when 80 then 'UK'
+                                                    else 'USE'
+                                                    end "근무지역"
+from employees;
+
+-- 5번
+select e.employee_id, e.last_name, e.department_id, d.department_name
+from employees e, departments d
+where e.department_id = d.department_id(+);
+
+-- 6번
+select last_name, hire_date, case  when >= 05 then 'New employee' 
+                                   when < 05 then 'Career employee' 
+from employees
+where employee_id = &employee_id;
+
+-- 7번
+select employee_id, last_name, salary, case  when salary <= 5000 then salary*0.2
+                                when salary <= 10000 then salary*0.15
+                                when salary <= 15000 then salary*0.1
+                                when salary >= 15001 then salary*0
+                                end as "인상된 급여"
+from employees
+where employee_id = &employee_id;
+
+-- 8번
+select d.department_id, d.department_name, l.city
+from departments d, locations l
+where d.location_id = l.location_id;
+
+-- 9번
+select employee_id, last_name, job_id
+from employees
+where department_id = (select department_id
+                      from    departments
+                      where   department_name = 'IT');
+                      
+-- 10번
+select e.department_id, count(d.department_name), round(avg(e.salary))
+from employees e, departments d
+where e.department_id = d.department_id
+group by e.department_id;
+
+-- 11번
+create table PROF (
+    PROFNO number(4),
+    NAME varchar2(15) not null,
+    ID varchar2(15) not null,
+    HIREDATE date,
+    PAY number(4));
+
+-- 12번
+--(1)
+insert into PROF
+values (1001, 'Mark', 'm1001', to_date('07/03/01', yy/mm/dd), 800);
+insert into PROF (PROFNO, NAME, ID, HIREDATE)
+values (1003, 'Adam', 'a1003', '11/03/02');
+commit;
+--(2)
+update PROF
+set PAY = 1300
+where PROFNO = 1001;
+--(3)
+delete PROF
+where PROFNO = 1003;
+
+-- 13번
+--(1)
+alter table PROF
+add   constraint PROF_NO_PK primary key(PROFNO);
+--(2)
+alter table PROF
+add         (gender char(3));
+--(3)
+alter table PROF
+modify (name varchar2(20));
+
+-- 14번
+--(1)
+create view prof_vu
+  as select PROFNO as pno, NAME as pname, id
+     from PROF;
+--(2)
+create or replace view prof_vu
+  as select PROFNO as pno, NAME as pname, id, hiredate
+     from PROF;
+
+-- 15번
+--(1)
+drop table PROF purge;
+

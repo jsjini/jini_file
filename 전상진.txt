@@ -1,0 +1,110 @@
+-- 1번
+select employee_id, last_name, salary, department_id
+from   employees
+where  upper(last_name) like ('H%')
+       and salary between 7000 and 12000;
+
+-- 2번
+select employee_id, last_name, to_char(hire_date, 'dd/mm/yyyy day'), to_char(salary*commission_pct,'$99,999.00') as incen
+from employees
+where commission_pct is not null
+order by incen desc;
+
+-- 3번
+select employee_id, last_name, job_id, salary, department_id
+from   employees
+where  salary > 5000 
+       and department_id in (50, 60);
+
+-- 4번
+select employee_id, last_name, department_id, case department_id when 20 then 'Canada'
+                                                     when 80 then 'UK'
+                                                    else 'USE'
+                                                    end "근무지역"
+from employees;
+
+-- 5번
+select e.employee_id, e.last_name, e.department_id, d.department_name
+from employees e, departments d
+where e.department_id = d.department_id(+);
+
+-- 6번
+select last_name, hire_date, case  when >= 05 then 'New employee' 
+                                   when < 05 then 'Career employee' 
+from employees
+where employee_id = &employee_id;
+
+-- 7번
+select employee_id, last_name, salary, case  when salary <= 5000 then salary*0.2
+                                when salary <= 10000 then salary*0.15
+                                when salary <= 15000 then salary*0.1
+                                when salary >= 15001 then salary*0
+                                end as "인상된 급여"
+from employees
+where employee_id = &employee_id;
+
+-- 8번
+select d.department_id, d.department_name, l.city
+from departments d, locations l
+where d.location_id = l.location_id;
+
+-- 9번
+select employee_id, last_name, job_id
+from employees
+where department_id = (select department_id
+                      from    departments
+                      where   department_name = 'IT');
+                      
+-- 10번
+select e.department_id, count(d.department_name), round(avg(e.salary))
+from employees e, departments d
+where e.department_id = d.department_id
+group by e.department_id;
+
+-- 11번
+create table PROF (
+    PROFNO number(4),
+    NAME varchar2(15) not null,
+    ID varchar2(15) not null,
+    HIREDATE date,
+    PAY number(4));
+
+-- 12번
+--(1)
+insert into PROF
+values (1001, 'Mark', 'm1001', to_date('07/03/01', yy/mm/dd), 800);
+insert into PROF (PROFNO, NAME, ID, HIREDATE)
+values (1003, 'Adam', 'a1003', '11/03/02');
+commit;
+--(2)
+update PROF
+set PAY = 1300
+where PROFNO = 1001;
+--(3)
+delete PROF
+where PROFNO = 1003;
+
+-- 13번
+--(1)
+alter table PROF
+add   constraint PROF_NO_PK primary key(PROFNO);
+--(2)
+alter table PROF
+add         (gender char(3));
+--(3)
+alter table PROF
+modify (name varchar2(20));
+
+-- 14번
+--(1)
+create view prof_vu
+  as select PROFNO as pno, NAME as pname, id
+     from PROF;
+--(2)
+create or replace view prof_vu
+  as select PROFNO as pno, NAME as pname, id, hiredate
+     from PROF;
+
+-- 15번
+--(1)
+drop table PROF purge;
