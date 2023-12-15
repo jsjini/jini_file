@@ -1,50 +1,56 @@
-select * from tab;
+create table room (
+ room_no varchar2(100) primary key,
+ room_grade varchar2(100) not null,
+ room_floor number not null,
+ room_view varchar2(100) not null,
+ room_price number not null,
+ room_state varchar2(100) default 'empty');
 
-create table student (
- student_no varchar2(10) primary key,
- student_name varchar2(100) not null,
- eng number default 80,
- math number default 70);
-
---등록, 수정, 삭제, 단건조회, 목록
---등록
-insert into student (student_no, student_name, eng, math)
-values      ('23-001', '홍길동', 70, 75);
-insert into student (student_no, student_name)--, eng, math)
-values      ('23-005', '김철수');
---수정
-update student
-set    eng = 85, math = 75
-where  student_no = '23-002';
---삭제
-delete from student where student_no = '23-002';
---단건조회
-select *
-from student where student_no = '23-002';
---목록
-select *
-from   student
-order by 1;
-
-delete from student where student_name = '';
-
--- 북테이블
-create table book (
- book_no varchar2(10) primary key,
- book_title varchar2(100) not null,
- author varchar2(10),
- press varchar2(10),
- price number);
+ create table members (
+ members_no varchar2(100) primary key,
+ members_grade varchar2(100) default '일반',
+ members_name varchar2(100) not null ,
+ members_tel varchar2(100) not null,
+ members_area varchar2(100) not null,
+ members_discount number(10,2));
  
-alter table book
-rename COLUMN book_price to price;
-insert into book
-values      ('B001', '이것이 자바다', '신용권', '이지스', 30000);
-insert into book
-values      ('C003', 'Oracle 기초', '고경희', '개발', 38000);
-insert into book
-values      ('D001', 'CSS 고급', '김용권', '퍼블리싱', 58000);
-
+ create table reserve (
+ reserve_no varchar2(100) primary key,
+ customer_name varchar2(100) not null,
+ check_in date,
+ check_out date,
+ payment number(10,2),
+ room_no varchar2(100),
+ members_no varchar2(100),
+ foreign key (room_no) references room(room_no),
+ foreign key (members_no) references members(members_no));
+ 
 select *
-from book;
+from room;
 
+update room
+set room_state = 'empty'
+where room_no = '101호';
+
+update room
+set room_no =   '605'
+where room_no = '605호';
+
+insert into room
+values ('604호','프리미어',6,'바다',300000,'empty');
+insert into room
+values ('605호','로열 스위트',6,'바다',1500000,'empty');
+
+select count(room_state)
+from room
+where room_grade = '스탠다드'
+and room_state = 'empty';
+
+select room_no, room_floor, room_view, to_char(room_price, '9,999,999') room_price
+from room
+where room_grade= '스위트'
+and room_state = 'empty';
+
+select room_grade
+from room
+where room_no = ?
