@@ -1,0 +1,22 @@
+시퀀스 생성
+CREATE SEQUENCE reserve_seq
+START WITH 100
+INCREMENT BY 1
+MINVALUE 1
+MAXVALUE 99999
+NOCYCLE
+NOCACHE;
+
+가상테이블 하나 생성.
+create table test1(
+test_1 varchar2(100) primary key);
+
+다오클래스에 reserveExe() 메소드에 작성.
+테이블에 삽입
+INSERT INTO test1 (test_1) VALUES ( 'No_' || reserve_seq.nextval );
+또는
+INSERT INTO test1 (test_1) VALUES ( 'No_' || TO_CHAR(reserve_seq.nextval));
+
+
+
+
