@@ -148,8 +148,102 @@ from room r, members m, reserve re
 where r.room_no = re.room_no
 and re.members_grade = m.members_grade;
 
+select *
+from room;
+select *
+from reserve
+order by reserve_no desc;
+select *
+from members;
+
 select re.reserve_no, re.customer_name, re.check_in, re.check_out, re.room_no, r.room_grade, r.room_price,
 m.members_grade, m.members_discount, re.payment
 from reserve re, room r, members m
-where r.room_no = re.room_no
-and re.members_grade = m.members_grade;
+where r.rooms_no = re.room_no
+and re.members_grade = m.members_grade
+order by re.reserve_no desc;
+
+select re.reserve_no, re.customer_name, re.check_in, re.check_out, re.room_no, r.room_grade, r.room_price,
+m.members_grade, m.members_discount, re.payment
+from reserve re join room r 
+on r.rooms_no = re.room_no
+join members m
+on re.members_grade = m.members_grade
+where re.reserve_no = 'HRN145';
+select re.reserve_no, re.customer_name, re.check_in, re.check_out, re.room_no, r.room_grade, r.room_price,
+re.payment
+from reserve re join room r 
+on r.rooms_no = re.room_no
+where re.reserve_no = 'HRN145';
+select m.members_grade
+from reserve re, members m
+where reserve_no = 'HRN145';
+select *
+from members;
+select *
+from reserve
+order by reserve_no desc;
+
+select members_grade
+from members
+where members_name = 'È²Ã¶¼ö';
+
+update reserve
+set room_no = '505'
+where reserve_no = 'HRN123';
+
+delete from reserve where reserve_no = ?
+
+update reserve
+set payment = 1261000
+where reserve_no = 'HRN123';
+
+update reserve
+set check_in = '24/3/6' , check_out = '24/3/8'
+where reserve_no = 'HRN123';
+
+update reserve
+set room_no = '505'
+where reserve_no = 'HRN123';
+select*
+from reserve
+where reserve_no = 'HRN123';
+update reserve
+set room_no = ?
+where reserve_no = ?;
+
+select members_grade
+from members
+where reserve_no = 'HRN123';
+
+
+
+select m.members_grade
+from reserve re, members m
+where reserve_no = 'HRN123';
+
+update reserve
+set check_in = ? , check_out = ?
+where reserve_no = ?;
+
+where rownum = 1;
+
+select re.reserve_no, re.customer_name, re.check_in, re.check_out, re.room_no, r.room_grade, re.payment
+from reserve re join room r 
+on re.room_no = r.room_no
+order by re.reserve_no desc;
+
+where rownum = 1;
+
+select re.reserve_no, re.customer_name, re.check_in, re.check_out, re.room_no, r.room_grade, re.payment
+from reserve re join room r 
+on re.room_no = r.room_no
+(select  order by re.reserve_no desc;
+
+
+select reserve_no
+FROM(SELECT reserve_no
+    FROM reserve
+    ORDER BY ROWNUM DESC)
+WHERE ROWNUM = 1;
+
