@@ -1,0 +1,29 @@
+co.yedam
+	- common : 공통용도 (한사람만 작업)
+
+	- board - vo : 
+	- board - service : 기능정의 (interface)
+	- board - serviceImpl : 구현객체 (class)
+	- board - mapper : 데이터베이스 처리
+	- board - command : 서블릿 모아놓는 용도
+
+	- student - vo : 
+	- student - service : 기능정의 (interface)
+	- student - serviceImpl : 구현객체 (class)
+	- student - mapper : 데이터베이스 처리
+	- student - command : 서블릿 모아놓는 용도
+
+	- member - vo : 
+	- member - service : 기능정의 (interface)
+	- member - serviceImpl : 구현객체 (class)
+	- member - mapper : 데이터베이스 처리
+	- member - command : 서블릿 모아놓는 용도
+
+
+
+mybatis
+
+
+url - 서블릿  |  1대1 맵핑이 되어야함.
+
+FrontController 
