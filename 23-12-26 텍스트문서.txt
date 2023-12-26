@@ -1,0 +1,20 @@
+sendRedirect() : 외부페이지도 가능
+
+             url 패턴 	        -  컨트롤 	              - jsp
+[목록]      boardList.do     -> BoardListControl        -> boardList.jsp
+[등록화면] boardForm.do   -> BoardFormControl      -> addBoardForm.jsp
+[등록]      addBoard.do     -> AddBoardControl       -> resq.sendRedirect(); boardList.jsp
+[상세조회] getBoard.do     -> GetBoardControl        -> getBoard.jsp
+[수정화면] modifyForm.do  -> ModifyFormControl    -> modBoardForm.jsp
+[수정]      modifyBoard.do -> ModifyBoardControl   -> resq.sendRedirect(); boardList.jsp
+[삭제화면] removeForm.do  -> RemoveFormControl    -> remBoardForm.jsp
+[삭제]      removeBoard.do -> RemoveBoardControl -> resq.sendRedirect(); boardList.jsp
+
+addBoard.do 파라미터형식: title=테스트&content=입력내용&writer=홍길동
+
+부트스트랩 - 템플릿
+https://startbootstrap.com/template/simple-sidebar#google_vignette
+
+w2스쿨즈 - 로그인 폼
+https://www.w3schools.com/howto/howto_css_login_form.asp
+
