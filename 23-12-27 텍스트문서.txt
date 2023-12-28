@@ -1,0 +1,9 @@
+
+help -> 이클립스마켓플레이스 -> mybatipse 검색 후 인스톨 다 체크 후 재시작
+
+아파치 jstl 다운 https://tomcat.apache.org/taglibs/standard/
+최신버전 다운 메이븐으로 완료!(pom.xml에 붙여넣기) 할 필요없음.
+
+토큰번호: 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
+
+
