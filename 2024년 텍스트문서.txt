@@ -1,0 +1,5 @@
+https://poiemaweb.com/ 
+
+샘플데이터 : https://www.mockaroo.com/
+
+함수 등 추가 공부: https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach
