@@ -64,8 +64,39 @@ from reply r
 join member m
 on r.replyer = m.id
 where board_no = 3
-order by 1
+order by 1 desc
 ) a ) b
-where b.rn > (1-1)*5 and b.rn <= 1*5;
+where b.rn > (2-1)*5 and b.rn <= 2*5;
 
+insert into reply
+values (reply_seq.nextval, 4, '테스트', 'user5', sysdate);
 
+select b.* from
+	(select rownum rn, a. * from
+	(
+	select r.*, m.name
+	from reply r
+	join member m
+	on r.replyer = m.id
+	where board_no = 3
+	order by 1 desc
+	) a ) b
+	where b.rn > (1-1)*5 and b.rn <= 1*5;
+
+select count(*) from reply where board_no = 3;
+delete from reply where reply_no = '6';
+
+select * from reply;
+select * from member;
+
+select replyer, count(*)
+from reply
+group by replyer;
+
+insert into member values('user5', '5555', '김사랑', 'User');
+
+select name, count(*)
+from reply r
+join member m
+on r.replyer = m.id
+group by name;
