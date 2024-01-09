@@ -34,4 +34,8 @@ https://www.data.go.kr/index.do 공공데이터 얻기.
 
 https://apis.map.kakao.com/ 카카오 지도 api
 
+https://tcpschool.com/jquery/intro 제이쿼리 공부
 
+https://jquery.com/ 제이쿼리 사이트
+
+https://tcpschool.com/jquery/jq_elementTraversing_SiblingTraversing // 숙제할때 공부 및 참고
