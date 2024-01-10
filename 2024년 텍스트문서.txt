@@ -39,3 +39,6 @@ https://tcpschool.com/jquery/intro 제이쿼리 공부
 https://jquery.com/ 제이쿼리 사이트
 
 https://tcpschool.com/jquery/jq_elementTraversing_SiblingTraversing // 숙제할때 공부 및 참고
+
+https://chromewebstore.google.com/detail/talend-api-tester-free-ed/aejoelaoggembcahagimdiliamlcdmfm // 포스트방식 테스트
+
