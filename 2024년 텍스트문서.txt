@@ -42,3 +42,15 @@ https://tcpschool.com/jquery/jq_elementTraversing_SiblingTraversing // 숙제할
 
 https://chromewebstore.google.com/detail/talend-api-tester-free-ed/aejoelaoggembcahagimdiliamlcdmfm // 포스트방식 테스트
 
+https://cyannara.github.io/ 자바스크립트 공부
+https://cyannara.github.io/javascript/javascript_vs_jquery/ 자바스크립트 공부
+
+1. 그룹이벤트(이벤트위임)
+2. attribute와 property 차이점
+
+Ajax : 페이지 이동없이 데이터만 받아와 수정되어 일부분만 교체됨.
+
+https://www.kobis.or.kr/kobisopenapi/homepg/apiservice/searchServiceInfo.do // 영화정보 api
+
+잔디- 협업툴
+https://www.erdcloud.com/ // 데이터
