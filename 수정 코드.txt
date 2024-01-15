@@ -1,0 +1,45 @@
+내일 할일
+1. 장바구니 삭제기능 마무리
+2. 장바구니 수정기능 만들기
+3. 장바구니 추가기능 만들기
+4. 주문페이지 타일 설정하기
+
+
+타일즈 가서 
+<definition name="WILDCARD:cart/*" extends="myhomepage">
+  <put-attribute name="header2" value="/WEB-INF/cart//header2/{1}.jsp" />
+  <put-attribute name="body" value="/WEB-INF/cart/{1}.jsp" />
+</definition>
+로 수정.
+
+<td class="action" data-cartNo="${item.cartNo}"><i
+class="ti-trash remove-icon"></i></td>
+
+function removeCartEvent() {
+	let remCarts = document.querySelectorAll("#cartList td:last-child");
+	console.log(remCarts);
+	remCarts.forEach(remCart => {
+		let cartNo = remCart.dataset.cartNo
+		console.log(cartNo);
+		remCart.addEventListener("click", function () {
+			fetch("removeCart.do?cartNo="+cartNo)
+			.then(result => result.json())
+			.then(result => {
+				if (result.retCode == "OK") {
+					alert('삭제됨.');
+					remCart.closest("tr").remove();
+				} else {
+					alert('삭제 중 오류발생.');
+				}
+			})
+		})
+	})
+}
+
+토탈출력 밑에 수정에 + - 눌렀을때 이벤트 걸기(벨류값 변화 + 합계가격 등등 변화)
+수정버튼 눌렀을때 이벤트 걸기(수정컨트롤러 만들어서 실행)
+
+추가컨트롤러 만들기
+추가버튼(카트에담기 버튼) 클릭시 추가되는 이벤트 - 버튼확인해서 이벤트 걸 수 있으면 걸기.
+
+주문페이지 타일즈 설정.
