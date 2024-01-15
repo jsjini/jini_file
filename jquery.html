@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <table border="1">
+        <tr>
+            <td class="goodsname">상품1</td>
+            <td>1000</td>
+            <td><button data-no="g1">주문</button></td>
+        </tr>
+        <tr>
+            <td class="goodsname">상품2</td>
+            <td>2000</td>
+            <td><button data-no="g2">주문</button></td>
+        </tr>
+        <tr>
+            <td class="goodsname">상품3</td>
+            <td>3000</td>
+            <td><button data-no="g3">주문</button></td>
+        </tr>
+    </table>
+    <script>
+        $("button").on("click", function() {
+            console.log(event.target.dataset.no);
+            console.log($(event.target).data("no"));
+            console.log(event.target.closest("tr").firstElementChild.innerText);
+            console.log($(event.target).closest("tr").find("td").first().html());
+            // console.log($(event.target).closest("tr").find("td").eq(1).html());
+            console.log($(event.target).closest("tr").find(".goodsname").html());
+            
+        })
+    </script>
+</body>
+</html>

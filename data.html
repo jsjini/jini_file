@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .goodsimg {
+            width: 200px;
+        }
+
+        .goodsborder {
+            border: 3px solid red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="goods">
+        <h1>상품1</h1>
+        <img src="/img/레드향.jpg" class="goodsimg goodsborder">
+        <div>가격:1000</div>
+        <div>
+            <button data-goodno="g1" class="btnOrder" data-price="1000">주문</button>
+        </div>
+    </div>
+    <!-- <div class="goods">
+        <h1>상품2</h1>
+        <img src="/img/블루베리.jpg">
+        <div>가격:2000</div>
+        <div>
+            <button data-goodno="g2" class="btnOrder" data-price="2000">주문</button>
+        </div>
+    </div> -->
+    <script>
+        const btnOrders = document.querySelectorAll(".btnOrder");
+        btnOrders.forEach(btnOrder => {
+            btnOrder.addEventListener('click', function () {
+                console.log(event.target.dataset.goodno);
+            })
+        })
+        // for(btnOrder of btnOrders){
+        //     btnOrder.addEventListener('click', function () {
+        //         console.log(event.target.dataset.goodno);
+        //     })
+        // }
+
+        const newNode = `<div class="goods">
+        <h1>상품2</h1>
+        <img src="/img/블루베리.jpg">
+        <div>가격:2000</div>
+        <div>
+            <button data-goodno="g2" class="btnOrder" data-price="2000">주문</button>
+        </div>
+    </div>`
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const url = "https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=f5eef3421c602c6cb7ea224104795888&targetDt=20240110";
+        fetch(url)
+        .then(result => result.json())
+        .then(result => {
+            console.log(result);
+            // 1위 영화제목만 출력
+            const movieNm = result.boxOfficeResult.dailyBoxOfficeList[0].movieNm;
+            console.log(movieNm);
+
+        })
+        const url2 = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key=f5eef3421c602c6cb7ea224104795888&movieCd=20235253";
+        fetch(url2)
+        .then(result => result.json())
+        .then(result => {
+            console.log(result);
+            const director = result.movieInfoResult.movieInfo.directors[0].peopleNm;
+            console.log(director);
+        })
+    </script>
+</body>
+</html>
