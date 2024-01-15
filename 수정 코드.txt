@@ -15,6 +15,12 @@
 <td class="action" data-cartNo="${item.cartNo}"><i
 class="ti-trash remove-icon"></i></td>
 
+제이쿼리로 하자.
+$(".delete_btn").on("click", function(e){
+   e.preventDefault();
+   const cartId = $(this).data("cartid");
+});
+
 function removeCartEvent() {
 	let remCarts = document.querySelectorAll("#cartList td:last-child");
 	console.log(remCarts);
@@ -36,8 +42,35 @@ function removeCartEvent() {
 	})
 }
 
+수정기능에도 변경버튼 or a태그에 data-cartNo= 값넣기.
+
+--  +-버튼 이벤트
+$(".plus_btn").on("click", function(){
+	let quantity = $(this).parent("div").find("input").val();
+	$(this).parent("div").find("input").val(++quantity);
+});
+$(".minus_btn").on("click", function(){
+	let quantity = $(this).parent("div").find("input").val();
+	if(quantity > 1){
+		$(this).parent("div").find("input").val(--quantity);		
+	}
+});
+
+/* 수량 수정 버튼 이벤트
+$(".quantity_modify_btn").on("click", function(){
+	let cartId = $(this).data("cartid");
+	let bookCount = $(this).parent("td").find("input").val();
+});
 토탈출력 밑에 수정에 + - 눌렀을때 이벤트 걸기(벨류값 변화 + 합계가격 등등 변화)
 수정버튼 눌렀을때 이벤트 걸기(수정컨트롤러 만들어서 실행)
+
+
+장바구니에 상품있는지 체크하는 mapper 작성.
+<select id="checkCart" resultType="cart" parama~~="cart">
+    select * from cart 
+    where memberNo = #{memberNo} and bookNo = #{bookNo}
+</select>
+이 값이 널이 아니면 장바구니에 동일한 상품이 있다는거
 
 추가컨트롤러 만들기
 추가버튼(카트에담기 버튼) 클릭시 추가되는 이벤트 - 버튼확인해서 이벤트 걸 수 있으면 걸기.
