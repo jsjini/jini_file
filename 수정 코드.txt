@@ -1,19 +1,15 @@
 할일
-1. 장바구니 추가기능 만들기
-2. 주문페이지 타일 설정하기
-3. 주문페이지 시작
+1. 주문페이지 인풋상자 작업
+2. 주문페이지 추가기능
+3. 주문내역 페이지 만들기
 
 
 
 장바구니 페이지 종합 위에 들어갈 만한거 넣기.
 
---추가
-장바구니에 상품있는지 체크하는 mapper.xml 작성.
-<select id="checkCart" resultType="cart" parama~~="cart">
-    select * from cart 
-    where memberNo = #{memberNo} and bookNo = #{bookNo}
-</select>
-이 값이 널이 아니면 장바구니에 동일한 상품이 있다는거
+
+
+
 
 mapper에 return문 위에 작성
 // 장바구니 데이터 체크
@@ -28,7 +24,7 @@ try {
 }
 
 addCartControll 에 참고.
-// 로그인 체크 -- post방식으로 가져오는법 물어보기.
+// 로그인 체크 
 HttpSession session = request.getSession();
 MemberVO mvo = (MemberVO)session.getAttribute("member");
 if(mvo == null) {
@@ -37,22 +33,12 @@ if(mvo == null) {
 
 
 
---주문페이지 시작
-주문페이지 타일즈 설정.
 
-OrderItemVO -- 상품 데이터를 담을 클래스
---뷰로부터 전달받을 값
-private int bookNo;
-private int quantity;
---DB로부터 꺼내올 값
-private String name;
-private int price;
---만들어 낼 값
-private int totalPrice;
-private int point;
-private int totalPoint;
 
 OrderVO -- OrderItemVO 클래스의 객체를 요소로 가지는 List 타입의 변수를 가지는 클래스
-
 private List<OrderItemVO> orders;
 
+
+
+// 롬복에 빌드추가 후 사용법
+ProductVO vo = ProductVO.builder().productName("aa").price(100).build();
