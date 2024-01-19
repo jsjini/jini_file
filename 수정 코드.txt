@@ -5,18 +5,23 @@
 
 
 
-orderItemPageList.do 에서 필요한회원정보확인해서 셀렉트문만들어
-받은 다음 아작스로 json파일로 정보넘기기.
-
-[회원정보와 동일] 만들어서 버튼누르면 자동으로 
-배송지 정보 인풋값에 들어가는 이벤트 걸기.
-
-주소찾기 버튼 만들어서 괜찮은 주소 cdn 연동시키기.
 
 배송요청사항에 마우스가져가면 요청메세지 3개정도 자동으로나와서
 선택할 수 있게 이벤트 걸기.
 
+onfocus="javascript:showBox('memoList');"
+onblur="javascript:hideBox('memoList');"
+onmouseover="javascript:showBox('memoList');"
+onmouseout="javascript:hideBox('memoList');"
+autocomplete="off/"
+
+우편주소, 도로명주소 readonly 
+
+
+
 결제하기 버튼 누르면 데이터값 넘기는 이벤트 걸기....
+
+
 
 
 
