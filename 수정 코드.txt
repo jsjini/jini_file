@@ -1,7 +1,48 @@
 할일
-1. 주문페이지 인풋상자 작업
-2. 주문페이지 추가기능작업하기
-3. 주문내역 페이지 만들기
+
+주문내역페이지 첫번째 도서사진 + 첫번째도서이름 + 총 건수 데이터 가져와서 출력시키기.
+orderItem테이블 셀렉트 해서 fetch 로 가져오자. 
+리스트로 가져와서 사진이랑 이름은 첫번째 데이터 [0]만 가져오고 수량은 더해서 넣기. 
+
+주문내역페이지 삭제버튼 이벤트 걸기.
+휴지통 누르면 주문내역페이지에서, 오더테이블 데이터랑 오더아이템 데이터 전부 삭제.
+확인취소 모달창 or alert창
+함께 주문한 전체 상품의 결제내역이 삭제되어 복구할 수 없으며, 
+삭제 이후 상품에 대한 리뷰작성이 불가능합니다. 정말 삭제하시겠습니까?
+
+주문상세페이지 받아온 데이터들 출력시키기.
+
+주문상세페이지에 리뷰쓰기 버튼 + 재구매 버튼 넣고 이벤트 걸기.
+리뷰쓰고나면 디스플레이 none시키고 리뷰확인 버튼 디스플레이 온 리뷰확인 누르면
+리뷰쓴내용 확인하게하면 좋을듯.
+
+
+
+
+
+
+
+
+
+
+
+
+결제하기 api 구현. (카카오페이, 네이버페이, 카드결제) - https://ksyy.tistory.com/267 참고
+
+주문내역페이지 페이징처리기능 넣기.
+
+장바구니 페이지 종합 위에 들어갈 만한거 넣기.
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -14,87 +55,6 @@ onblur="javascript:hideBox('memoList');"
 onmouseover="javascript:showBox('memoList');"
 onmouseout="javascript:hideBox('memoList');"
 autocomplete="off/"
-
-우편주소, 도로명주소 readonly 
-
-
-
-결제하기 버튼 누르면 데이터값 넘기는 이벤트 걸기....
-
-
-
-
-
-
-
-장바구니 페이지 종합 위에 들어갈 만한거 넣기.
-
-
-
-
-
-
-
-다음 주소 cdn
-<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
-다음 주소 js함수
-/* 다음 주소 연동 */
-function execution_daum_address(){
- 		console.log("동작");
-	   new daum.Postcode({
-	        oncomplete: function(data) {
-	            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
-	            
-	        	// 각 주소의 노출 규칙에 따라 주소를 조합한다.
-                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                var addr = ''; // 주소 변수
-                var extraAddr = ''; // 참고항목 변수
- 
-                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                    addr = data.roadAddress;
-                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                    addr = data.jibunAddress;
-                }
- 
-                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-                if(data.userSelectedType === 'R'){
-                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                        extraAddr += data.bname;
-                    }
-                    // 건물명이 있고, 공동주택일 경우 추가한다.
-                    if(data.buildingName !== '' && data.apartment === 'Y'){
-                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                    }
-                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-                    if(extraAddr !== ''){
-                        extraAddr = ' (' + extraAddr + ')';
-                    }
-                 	// 추가해야할 코드
-                    // 주소변수 문자열과 참고항목 문자열 합치기
-                      addr += extraAddr;
-                
-                } else {
-                	addr += ' ';
-                }
- 
-             	// 제거해야할 코드
-                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                $(".address1_input").val(data.zonecode);
-                $(".address2_input").val(addr);				
-                // 커서를 상세주소 필드로 이동한다.
-                $(".address3_input").attr("readonly", false);
-                $(".address3_input").focus();	 
-	            
-	            
-	        }
-	    }).open();  	
-	
-}
-
 
 
 
