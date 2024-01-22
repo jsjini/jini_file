@@ -12,18 +12,30 @@ orderItem테이블 셀렉트 해서 fetch 로 가져오자.
 
 주문상세페이지 받아온 데이터들 출력시키기.
 
-주문상세페이지에 리뷰쓰기 버튼 + 재구매 버튼 넣고 이벤트 걸기.
+주문상세페이지에 재구매 버튼  이벤트 걸기.
+
+(완료) 주문상세페이지에 리뷰쓰기 버튼  이벤트 걸기.
+	-button td 밑에
+	if(셀렉트 값이 있으면 내가쓴 리뷰에 넣고 리뷰쓰기버튼없애고 리뷰확인버튼 보이기.)
+	(셀렉트 값이 없으면 내가쓴 리뷰 없애고 리뷰쓰기버튼 보이기.)
+
+	-review 체크에 필요한 파라미터 book_no, orderitem_no, member_no
+
+	-리뷰쓰기 버튼 누르면
+	array.from(addReviewBtns).forEach
+	버튼 누르면  인풋태그(타입은textarea) 나오게하기 
+
+등록버튼누르면 add리뷰 실행
+
+(완료) 	-리뷰확인 버튼 누르면
+	td 내가 쓴 리뷰 : (rdt)<br> contents <a태그><i>삭제아이콘</i></a>
+
+
+
+
+
 리뷰쓰고나면 디스플레이 none시키고 리뷰확인 버튼 디스플레이 온 리뷰확인 누르면
 리뷰쓴내용 확인하게하면 좋을듯.
-
-
-
-
-
-
-
-
-
 
 
 
@@ -61,3 +73,5 @@ autocomplete="off/"
 
 // 롬복에 빌드추가 후 사용법
 ProductVO vo = ProductVO.builder().productName("aa").price(100).build();
+
+mimetype 공부.
