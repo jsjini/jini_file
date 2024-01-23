@@ -1,24 +1,6 @@
 [할일]
 
 
-주문내역페이지 첫번째 도서사진 + 첫번째도서이름 + 총 건수 데이터 가져와서 출력시키기.
-orderItem테이블 셀렉트 해서 fetch 로 가져오자. 
-리스트로 가져와서 사진이랑 이름은 첫번째 데이터 [0]만 가져오고 수량은 더해서 넣기. 
-select b.name, b.img, oi.quantity
-from book b join order_item oi
-on b.book_no = oi.book_no
-where od_no = 202401223;
-
-
-숫자 변환 시키기.
-
-
-alert 창 수정하기.
-
-
-주문상세페이지 받아온 데이터들 출력시키기.
-
-
 
 
 //
