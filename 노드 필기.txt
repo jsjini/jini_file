@@ -1,0 +1,6 @@
+구글에 노드 검색후 왼쪽꺼 다운로드.
+
+오류나오면 파워셀 관리자모드로 실행해서 set-executionpolicy unrestricted 실행 후 Y 엔터
+
+비주얼스튜디오 명령팔레트 가서 defal 터미널로 설정.
+
