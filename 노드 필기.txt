@@ -1,4 +1,70 @@
 https://reqres.in/   	아작스 샘플 url 
 regexr.com/   	정규표현식 도움사이트
+https://www.npmjs.com/package/mysql#transactions      mysql 트랜잭션모듈 참고
+https://blog.naver.com/yl9517/222458464088  send/forword 차이
 
+mysql 폴더 만들고 cd mysql 들어가서
+npm init
+
+npm install express
+npm install mysql
+npm install dotenv
+npm install --save-dev nodemon
+
+
+1. sql 문  ->  js
+2. mysql 실행요청  ->  js
+3. app.js  ->  js
+
+
+동일한 디렉터리에 있는 파일의 변경사항 감시
+nodemon 파일명.js
+nodemon app.js
+
+특정 디렉터리만 감시
+nodemon --watch [감시대상] [재실행파일]
+nodemon --watch db app.js
+
+패키지.json에
+스크립츠에 "dev" : "nodemon app.js"
+npm run dev 실행.
+
+
+1. queryString
+param = ~~
+
+2. JSON
+{
+   "param" : {
+	"name" : "Kang"
+	, "email" : "aaa@mail.com"
+	, "phone" : "010-111-111"
+	}
+}
+
+
+
+[insert] 등록
+OkPacket {
+  fieldCount: 0,
+  affectedRows: 1,
+  insertId: 3,
+  serverStatus: 2,
+  warningCount: 0,
+  message: '',
+  protocol41: true,
+  changedRows: 0
+}
+
+[update] 수정
+{
+"fieldCount": 0,
+"affectedRows": 1,
+"insertId": 0,
+"serverStatus": 2,
+"warningCount": 0,
+"message": "(Rows matched: 1  Changed: 1  Warnings: 0",
+"protocol41": true,
+"changedRows": 1
+}
 

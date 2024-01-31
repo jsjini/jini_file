@@ -1,0 +1,53 @@
+[데이터 타입]
+기본적으로 대소문자 구분하지 않음.
+
+-문자형 	CHAR	  1~255       바이트 (한글은 한글자에 3 바이트 정도 사용)
+	VARCHAR	  1~16383    바이트
+	TEXT	  많은 양의 데이터가 필요할 때 사용 (VARCHAR 보다 6배정도 큼)
+
+
+-숫자형	정수	  INT        4 바이트 (왠만한 정수 처리가능)
+		  BIGINT  
+
+	실수	  FLOAT	
+		  DOUBLE	  (사용권장)
+
+
+-날짜형	DATE	  날짜만	      YYYY-MM-DD
+	TIME	  시간만	      HH:MM:SS
+	DATETIME	  날짜+시간
+
+
+[주의사항]
+
+-변경사항
+IFNULL(컬럼, 대체값)	 	    -  오라클의 NVL
+적용안됨		  	    -  오라클의 LIKE
+CONCAT(CONCAT('%','문자'),'%')  -  오라클의 '%'||'문자'||'%' (문자결합기호)
+
+
+-형변환
+CAST(대상 AS 타입)
+DATE_FORMAT(값, 출력포맷)	-    %Y%m%d
+
+ROWNUM 사용안됨. 페이징은 따로 설명.
+시퀀스 없음  -  프라이머리키 앞에 AUTO_INCREMENT 사용(초기값 설정불가-세부설정불가, 최대값기준 +1)
+
+함수 등 참고자료.
+https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_date-format
+
+
+
+
+create table `t_users` (
+	`user_no` int auto_increment,
+    `user_id` varchar(100) not null,
+    `user_pwd` varchar(100) not null,
+    `user_name` varchar(100) not null,
+    `user_gender` char(1) check( user_gender in ('M', 'F')),
+    `user_age` int,
+    `join_date` date,
+    primary key(`user_no`)
+);
+
+이 테이블에 기반으로해서 전체조회, 단건조회, 추가, 수정, 삭제까지 해보기.
