@@ -1,0 +1,16 @@
+깃에 노드_모듈s 폴더는 안들어감.
+npm install 하면 패키지 정보를 통해 노드_모듈s 폴더 파일이 들어감.
+
+vue add router
+
+뷰 버전에 관한 참고 사이트
+https://vueframework.com/docs/v3/ko/ko-KR/guide/migration/v-if-v-for.html#%E1%84%80%E1%85%A2%E1%84%8B%E1%85%AD
+
+
+App.vue	- HomeView
+	- AboutView
+	- BoardView	- HeaderComp, 
+		       	- FooterComp, 
+			- BoardList, 
+			- BoardWrite,
+			- BoardRead
