@@ -72,18 +72,28 @@ EXECUTE TEST_PRO(205);
 CREATE PROCEDURE yedam_emp
 (p_eid IN test_employees.employee_id%TYPE)
 IS
+    v_ename VARCHAR2(100);
     v_result VARCHAR2(100);
 BEGIN
-    SELECT RPAD(SUBSTR(last_name, 1, 1), LENGTH(last_name), '*')
-    INTO v_result
+--    SELECT RPAD(SUBSTR(last_name, 1, 1), LENGTH(last_name), '*')
+--    INTO v_ename
+--    FROM test_employees
+--    WHERE employee_id = p_eid;
+--    
+--    DBMS_OUTPUT.PUT_LINE(v_ename); 
+    
+    SELECT last_name
+    INTO v_ename
     FROM test_employees
     WHERE employee_id = p_eid;
     
-    DBMS_OUTPUT.PUT_LINE(v_result); 
+    v_result := RPAD(SUBSTR(v_ename, 1, 1), LENGTH(v_ename), '*');
+    DBMS_OUTPUT.PUT(v_ename); 
+    DBMS_OUTPUT.PUT_LINE(' -> ' || v_result); 
 END;
 /
 
-EXECUTE yedam_emp(176);
+EXECUTE yedam_emp(178);
 
 
 /*
@@ -128,7 +138,7 @@ EXCEPTION
 END;
 /
 
-EXECUTE get_emp(30);
+EXECUTE get_emp(90);
 
 
 /*
@@ -145,7 +155,7 @@ IS
     e_emp EXCEPTION;
 BEGIN
     UPDATE test_employees
-    SET salary = salary + p_increase
+    SET salary = salary * (1 + (p_increase/100))
     WHERE employee_id = p_eid;
 
     IF SQL%NOTFOUND THEN
@@ -159,3 +169,5 @@ END;
 
 EXECUTE y_update(200, 10);
 
+SELECT *
+FROM test_employees;
