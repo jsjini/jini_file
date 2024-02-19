@@ -1,0 +1,238 @@
+-- 문제 2번
+DECLARE
+    v_dname departments.department_name%TYPE;
+    v_jobid employees.job_id%TYPE;
+    v_salary employees.salary%TYPE;
+    v_comm v_salary%TYPE;
+    v_result v_salary%TYPE;
+BEGIN
+    SELECT d.department_name, e.job_id, e.salary, e.commission_pct 
+    INTO v_dname, v_jobid, v_salary, v_comm
+    FROM employees e JOIN departments d
+    ON e.department_id = d.department_id
+    WHERE e.employee_id = &사원번호;
+    
+    v_result := (v_salary + (NVL(v_salary, 0) * NVL(v_comm, 0)))*12;
+    
+    DBMS_OUTPUT.PUT_LINE('부서이름 : ' || v_dname);
+    DBMS_OUTPUT.PUT_LINE('JOB_ID : ' || v_jobid);
+    DBMS_OUTPUT.PUT_LINE('급여 : ' || v_salary);
+    DBMS_OUTPUT.PUT_LINE('연간 총수입 : ' || v_result);
+END;
+/
+
+
+-- 문제 3번
+DECLARE
+    v_date DATE;
+BEGIN
+    SELECT hire_date
+    INTO v_date
+    FROM employees
+    WHERE employee_id = &사원번호;
+    
+    -- IF v_date > = TO_DATE('2015-01-01', 'yyyy-MM-dd') THEN
+     IF TO_CHAR(v_date, 'yyyy') >= '2016' THEN
+        DBMS_OUTPUT.PUT_LINE('New employee');
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('Career employee');
+    END IF;
+END;
+/
+
+
+-- 문제 4번
+BEGIN
+    FOR dan IN 2 .. 9 LOOP
+        IF MOD(dan, 2) <> 0 THEN
+            FOR gugu IN 1 .. 9 LOOP
+                DBMS_OUTPUT.PUT_LINE(dan || ' * ' || gugu || ' = ' || dan * gugu);
+            END LOOP;
+            DBMS_OUTPUT.PUT_LINE('');
+        END IF;
+    END LOOP; 
+END;
+/
+
+
+-- 문제 5번
+DECLARE
+    CURSOR emp_cursor IS
+        SELECT employee_id, last_name, salary
+        FROM employees
+        WHERE department_id = &부서번호;
+        
+    v_emp_record emp_cursor%ROWTYPE;
+BEGIN
+    OPEN emp_cursor;
+
+    LOOP
+        FETCH emp_cursor INTO v_emp_record;
+        EXIT WHEN emp_cursor%NOTFOUND;
+        
+        DBMS_OUTPUT.PUT('사원번호: ' || v_emp_record.employee_id);
+        DBMS_OUTPUT.PUT(', 사원이름: ' || v_emp_record.last_name);
+        DBMS_OUTPUT.PUT_LINE(', 급여: ' || v_emp_record.salary);
+    END LOOP;
+    
+    CLOSE emp_cursor;
+END;
+/
+
+
+-- 문제 6번
+CREATE PROCEDURE y_update
+(p_eid employees.employee_id%TYPE,
+ p_increase employees.salary%TYPE)
+IS
+    e_emp EXCEPTION;
+BEGIN
+    UPDATE employees
+    SET salary = salary * (1 + (p_increase/100))
+    WHERE employee_id = p_eid;
+
+    IF SQL%ROWCOUNT = 0 THEN
+        RAISE e_emp;
+    END IF;
+EXCEPTION
+    WHEN e_emp THEN
+    DBMS_OUTPUT.PUT_LINE('No search employee!!');
+END;
+/
+SELECT TO_CHAR(sysdate, 'yyMMdd')
+FROM dual;
+
+
+-- 문제 7번
+CREATE PROCEDURE y_age
+(p_number IN VARCHAR2)
+IS
+    v_num NUMBER;
+    v_gen VARCHAR2(100);
+    v_age NUMBER;
+    v_date VARCHAR2(100);
+    v_year VARCHAR2(100);
+BEGIN   
+    v_num := SUBSTR(p_number, 7, 1);
+    IF v_num = 1 OR v_num = 3 THEN
+        v_gen := '남자';
+    ELSE 
+        v_gen := '여자';
+    END IF;
+    
+    SELECT TO_CHAR(sysdate, 'yyyyMMdd')
+    INTO v_date
+    FROM dual;
+    
+    v_year := p_number;
+    IF SUBSTR(v_year, 1, 2) > 50 THEN
+        v_year := 19 || v_year;
+    ELSE
+        v_year := 20 || v_year;
+    END IF; 
+    
+    v_age := TO_NUMBER(SUBSTR(v_date, 1, 4)) - TO_NUMBER(SUBSTR(v_year, 1, 4));
+
+    IF TO_NUMBER(SUBSTR(v_year, 5, 2)) > TO_NUMBER(SUBSTR(v_date, 5, 2)) THEN
+        v_age := v_age - 1;
+    ELSIF TO_NUMBER(SUBSTR(v_year, 7, 2)) > TO_NUMBER(SUBSTR(v_date, 7, 2)) THEN
+        v_age := v_age - 1;
+    END IF;
+
+    DBMS_OUTPUT.PUT('만 나이 : ' || v_age);
+    DBMS_OUTPUT.PUT_LINE(', 성별 : ' || v_gen);
+END;
+/
+
+
+-- 문제 8번
+CREATE FUNCTION y_cur
+(p_eid employees.employee_id%TYPE)
+RETURN VARCHAR2
+IS
+    v_hyear NUMBER(2,0);
+BEGIN
+    SELECT TRUNC(MONTHS_BETWEEN(sysdate, hire_date)/12)
+    INTO v_hyear
+    FROM employees
+    WHERE employee_id = p_eid;
+    
+    RETURN v_hyear;
+END;
+/
+
+
+-- 문제 9번
+SELECT m.last_name
+FROM employees e JOIN employees m
+    ON (e.manager_id = m.employee_id)
+WHERE e.employee_id = 149;
+
+SELECT last_name
+FROM employees
+WHERE department_name = (SELECT department_name
+                        FROM departments
+                        WHERE department_id = 0);
+                        
+
+SELECT employee_id, last_name
+FROM employees
+WHERE manager_id = (SELECT manager_id
+                    FROM departments
+                    WHERE department_name = 'IT');
+                    
+SELECT (SELECT last_name
+        FROM employees
+                  WHERE department_name = 'IT')
+FROM departments
+WHERE manager_id = (SELECT manager_id
+                    FROM departments
+                    WHERE department_name = 'IT');
+                    
+select *
+from employees;
+select *
+from departments;
+SELECT manager_id
+                    FROM departments
+                    WHERE department_name = 'IT';
+                    
+SELECT last_name
+FROM employees
+WHERE manager_id = 103;
+
+--CREATE FUNCTION y_cur
+--(p_eid employees.employee_id%TYPE)
+--RETURN VARCHAR2
+--IS
+--    v_hyear NUMBER(2,0);
+--BEGIN
+--    SELECT TRUNC(MONTHS_BETWEEN(sysdate, hire_date)/12)
+--    INTO v_hyear
+--    FROM employees
+--    WHERE employee_id = p_eid;
+--    
+--    RETURN v_hyear;
+--END;
+--/
+
+select department_name
+from departments
+where department_id = 90;
+
+-- 문제 10번.
+SELECT name, text
+FROM user_source
+WHERE type IN ('PROCEDURE', 'FUNCTION', 'PACKAGE', 'PACKAGE BODY');
+
+
+-- 문제 11번.
+BEGIN
+    FOR num IN 1 .. 9 LOOP -- 몇번째 줄
+        FOR i IN num .. 9 LOOP 
+            DBMS_OUTPUT.PUT(' ');
+        END LOOP;
+        DBMS_OUTPUT.PUT_LINE('*');
+    END LOOP;
+END;
+/
