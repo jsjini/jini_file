@@ -1,0 +1,45 @@
+select
+    a.column_id as "SEQ",
+    a.table_name as "테이블명",
+    a.column_name as "컬럼명",
+    a.data_type as "데이터 타입",
+    case when a.data_type = 'NUMBER' and a.data_precision is not null then a.data_precision||','||a.data_scale
+         when a.data_type = 'NUMBER' and a.data_precision is null then ''
+         when a.data_type in ('DATE', 'CLOB') then ''
+         else to_char(a.char_length)
+         end as len,
+    case when a.nullable = 'Y' then 'N'
+         when a.nullable = 'N' then 'Y' 
+         end as nn,
+    case when c.constraint_type = 'P' then 'Y' else '' end as "PK 여부",
+    case when d.constraint_type = 'R' then 'Y' else '' end as "FK 여부",
+    b.comments as "논리명"
+from user_tab_columns a
+left join user_col_comments b
+    on a.table_name = b.table_name
+    and a.column_name = b.column_name
+left join (
+    select uc.*, ucc.column_name
+    from user_cons_columns ucc
+    join (
+        select constraint_name, table_name, constraint_type 
+        from user_constraints
+        where constraint_type = 'P')uc
+    on ucc.table_name = uc.table_name
+    and ucc.constraint_name = uc.constraint_name
+    )c
+    on a.table_name = c.table_name
+    and a.column_name = c.column_name
+left join (
+    select uc.*, ucc.column_name
+    from user_cons_columns ucc
+    join (
+        select constraint_name, table_name, constraint_type 
+        from user_constraints
+        where constraint_type = 'R')uc
+    on ucc.table_name = uc.table_name
+    and ucc.constraint_name = uc.constraint_name
+    )d
+    on a.table_name = d.table_name
+    and a.column_name = d.column_name
+order by a.table_name, a.column_id

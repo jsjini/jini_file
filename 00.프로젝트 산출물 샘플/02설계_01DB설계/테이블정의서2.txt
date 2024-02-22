@@ -1,0 +1,73 @@
+ WITH fk_constranint AS (
+ SELECT
+            uc.*,
+            ucc.column_name
+   FROM     user_cons_columns ucc
+   JOIN   (
+              SELECT
+                    constraint_name,
+                    table_name,
+                    constraint_type
+                FROM
+                    user_constraints
+               WHERE
+                    constraint_type = 'R'
+            ) uc ON ucc.table_name = uc.table_name
+                 AND ucc.constraint_name = uc.constraint_name
+ ) 
+,  
+pk_constranint AS (
+ SELECT
+            uc.*,
+            ucc.column_name
+   FROM
+            user_cons_columns ucc
+   JOIN (
+              SELECT
+                    constraint_name,
+                    table_name,
+                    constraint_type
+                FROM
+                    user_constraints
+                WHERE
+                    constraint_type = 'P'
+            ) uc ON ucc.table_name = uc.table_name
+                AND ucc.constraint_name = uc.constraint_name 
+)
+SELECT
+            a.column_id         AS "SEQ",
+            a.table_name        AS "테이블명",
+            a.column_name       AS "컬럼명",
+            a.data_type         AS "데이터 타입",
+            CASE
+                WHEN a.data_type = 'NUMBER'  AND a.data_precision IS NOT NULL 
+                  THEN a.data_precision  || ','  || a.data_scale
+                WHEN a.data_type = 'NUMBER'  AND a.data_precision IS NULL 
+                  THEN      ''
+                WHEN a.data_type IN ( 'DATE', 'CLOB' ) 
+                  THEN      ''
+                ELSE    to_char(a.char_length)
+            END                AS  "길이",
+            CASE
+                WHEN a.nullable = 'Y'    THEN   'N'
+                WHEN a.nullable = 'N'    THEN   'Y'
+            END                AS "NOT NULL 여부",
+            CASE
+                WHEN c.constraint_type = 'P' 
+                  THEN  'Y'
+                ELSE    ''
+            END                AS "PK 여부",
+            CASE
+                WHEN d.constraint_type = 'R' 
+                 THEN       'Y'
+                ELSE     ''
+            END                AS "FK 여부",
+            b.comments         AS "논리명"
+FROM
+            user_tab_columns             a
+            LEFT JOIN user_col_comments  b ON a.table_name = b.table_name   AND a.column_name = b.column_name
+            LEFT JOIN pk_constranint     c ON a.table_name = c.table_name   AND a.column_name = c.column_name
+            LEFT JOIN fk_constranint     d ON a.table_name = d.table_name   AND a.column_name = d.column_name
+ORDER BY
+            a.table_name,
+            a.column_id
