@@ -1,0 +1,14 @@
+
+//예시
+//쿼리형태로 받음
+noticeRouter.get("/noticeList", async (request,response)=>{
+    let result = await db.connection('notice','noticeList');
+    response.send(result);
+  });
+
+//등록 : post => body
+noticeRouter.post("/", async (request, response)=>{
+  let data = request.body.param; // { param : { .. } }
+  let result = await db.connection('notice','noticeInsert', data);
+  response.send(result);
+});
